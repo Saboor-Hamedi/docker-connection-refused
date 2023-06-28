@@ -1,0 +1,40 @@
+#inside container 
+docker exec -it php-mvc bash
+docker exec -it php-mvc-app-1 bash
+install:
+composer require vlucas/phpdotenv
+to get this: 
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+#build a docker image/
+docker build -t php-mvc ./docker 
+
+# see all images 
+docker images ls 
+
+# start the image 
+docker run -d --rm -p 8080:80 --name php-mvc -v "$PWD":/var/www php-mvc composer install
+
+docker run --rm -v $(pwd):/var/www php_mvc composer install
+
+
+docker-compose exec app composer install
+
+docker compose up -d
+
+#database 
+docker-compose exec app php migrations php
+
+# Docker provides a single command that will clean up any resources — 
+# images, containers, volumes, and networks — that are dangling (not tagged or associated with a container):
+docker system prune
+docker system prune -a
+
+# access to directory 
+docker exec -it php-mvc bash
+
+This change enables using all of 
+the shared flags on the root docker command. 
+For example, 
+    docker --log-level=debug --tls compose up 
+enables debug logging from the Docker Engine as well as ensures that TLS is used for the connection.
