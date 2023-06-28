@@ -1,67 +1,40 @@
 version: "3.9"
 
 services:
-#   app:
-#     build: ./docker
-#     image: php_mvc
-#     ports:
-#       - "8888:80"
-#     volumes:
-#       - ./public/:/var/www/html
-#       - ./vendor/:/var/www/vendor # load vendor once docker-compose up -d
-#       - ./composer.json:/var/www/composer.json
-#       - ./composer.lock:/var/www/composer.lock
-
-
-#   db:
-#     image: mariadb
-#     restart: always
-#     environment:
-#       MYSQL_ROOT_PASSWORD: saboor123
-#       MYSQL_HOST: db
-#       MYSQL_PORT: ${MYSQL_PORT}
-#       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#       MYSQL_DATABASE: ${MYSQL_DATABASE}
-#       MYSQL_USER: ${MYSQL_USER}
-#     volumes:
-#       - ./:/var/www
-#     ports:
-#       - "3307:3307"
- 
-
+  app:
+      image: php_mvc
+      build: ./docker
+      ports:
+        - "8888:80"
+      links:
+        - db
+      environment:
+        DB_HOST: db
+        DB_PORT: ${DOCKER_MARIADB_PORT}
+        DB_NAME: ${DOCKER_MARIADB_DATABASE}
+        DB_USER: ${DOCKER_MARIADB_USER}
+        DB_PASSWORD: ${DOCKER_MARIADB_PASSWORD}
+      volumes:
+        - ./public/:/var/www/html
+        - ./vendor/:/var/www/vendor # load vendor once docker-compose up -d
+        - ./composer.json:/var/www/composer.json
+        - ./composer.lock:/var/www/composer.lock
 
   db:
     image: mariadb
     ports:
-      - "${DOCKER_MARIADB_PORT}:3307"
-    expose: 
-      - "${DOCKER_MARIADB_PORT}"
-    restart: always
+      - "${DOCKER_MARIADB_PORT}:3306"
+    restart: unless-stopped
     volumes:
-      - ./mariadb.cnf:/etc/mysql.conf.d/mysqld.conf
+      - ./docker/mysql-config.cnf:/etc/mysql/conf.d/config.cnf
     environment:
       MARIADB_ROOT_PASSWORD: ${DOCKER_MARIADB_ROOT_PASSWORD}
       MARIADB_USER: ${DOCKER_MARIADB_USER}
       MARIADB_PASSWORD: ${DOCKER_MARIADB_PASSWORD}
       MARIADB_DATABASE: ${DOCKER_MARIADB_DATABASE}
+    command: --innodb-use-native-aio=0
 
 
 
-  app:
-    build: ./docker
-    image: php_mvc
-    ports:
-      - "8888:80"
-    links:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: ${DOCKER_MARIADB_PORT}
-      DB_NAME: ${DOCKER_MARIADB_DATABASE}
-      DB_USER: ${DOCKER_MARIADB_USER}
-      DB_PASSWORD: ${DOCKER_MARIADB_PASSWORD}
-    volumes:
-      - ./public/:/var/www/html
-      - ./vendor/:/var/www/vendor # load vendor once docker-compose up -d
-      - ./composer.json:/var/www/composer.json
-      - ./composer.lock:/var/www/composer.lock
+
+ 

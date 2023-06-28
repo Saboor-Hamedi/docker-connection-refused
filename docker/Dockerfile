@@ -10,17 +10,18 @@ RUN a2enmod rewrite
 
 # Install necessary packages
 RUN apt-get update && \
-    apt-get install \
+    apt-get install -y --no-install-recommends \
     libzip-dev \
     wget \
     git \
-    unzip \
-    -y --no-install-recommends
+    unzip 
 
+# Install MySQL client
+RUN apt-get update \
+    && apt-get install -y mysql-client \
+    && rm -rf /var/lib/apt/lists/*    
 # install mysql terminal
-
 RUN apt-get update && apt-get install -y mariadb-client
-
 # Install PHP Extensions
 RUN docker-php-ext-install zip pdo_mysql
 
@@ -45,13 +46,6 @@ RUN apt-get purge -y g++ \
     && sh ./install-composer.sh \
     && rm ./install-composer.sh
 
-# Copy the .env file to the container
-WORKDIR /var/www
-
-COPY .env /var/www/.env
-
-# Change the current working directory
-
 
 # Change the owner of the container document root
 RUN chown -R www-data:www-data /var/www
@@ -60,6 +54,7 @@ RUN chown -R www-data:www-data /var/www
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
- COPY . /app
+# Copy the .env file to the container
+WORKDIR /var/www
 # Start Apache in foreground
 CMD ["apache2-foreground"]
