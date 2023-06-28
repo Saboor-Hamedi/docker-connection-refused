@@ -4,16 +4,15 @@ ini_set('display_errors', true);
 
 define("APP_PATH", __DIR__ . "/../");
 require_once __DIR__ . '/../vendor/autoload.php';
-
 // index.php:
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-if(file_exists(".env")) {
+if (file_exists(".env")) {
     $dotenv->load();
 }
 try {
     // Establish PDO connection
-    $dsn = "mysql:host=" . getenv('DB_HOST') . ";port=" . getenv('DB_PORT') . ";dbname=" . getenv('DB_NAME');
-    $pdo = new PDO($dsn, getenv('DB_USER'), getenv('DB_PASSWORD'));
+    $dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" . $_ENV['DB_NAME'];
+    $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -28,6 +27,7 @@ try {
     // Connection failed, handle the exception
     echo 'Connection failed: ' . $e->getMessage();
 }
+
 
 
 
