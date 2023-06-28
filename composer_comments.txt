@@ -41,3 +41,6 @@ enables debug logging from the Docker Engine as well as ensures that TLS is used
 
 apt-get update
 apt-get install -y mysql-client
+docker exec -i php-mvc-app-1 mysql -u admin  -psaboor123 school  push_tables.sql
+
+mysql -h php-mvc-db-1 -P 3306 -u admin -p --socket=/run/mysqld/mysqld.sock

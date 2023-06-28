@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_ALLOW_SUPERUSER =1
 # Copy virtual host into container
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
@@ -20,8 +20,8 @@ RUN apt-get update && \
 RUN apt-get update \
     && apt-get install -y default-mysql-client \
     && rm -rf /var/lib/apt/lists/*    
-
-
+# install mysql terminal
+RUN apt-get update && apt-get install -y mariadb-client
 # Install PHP Extensions
 RUN docker-php-ext-install zip pdo_mysql
 
@@ -45,10 +45,15 @@ RUN apt-get purge -y g++ \
     && rm -rf /tmp/* \
     && sh ./install-composer.sh \
     && rm ./install-composer.sh
+
+
 # Change the owner of the container document root
 RUN chown -R www-data:www-data /var/www
+
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Copy the .env file to the container
 WORKDIR /var/www
 # Start Apache in foreground
