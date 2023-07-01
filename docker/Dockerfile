@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
 
 # Copy virtual host into container
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
@@ -13,8 +13,12 @@ RUN apt-get update && \
     wget \
     git \
     unzip \
-    mariadb-client\
     -y --no-install-recommends
+# Install mariadb-client
+# RUN apt-get update
+# RUN apt-get install -y default-mysql-client
+RUN apt-get update && apt-get install -y mariadb-client
+
 # Install PHP Extensions
 RUN docker-php-ext-install zip pdo_mysql
 

@@ -12,4 +12,13 @@ docker images
 docker run -d --name docker-apache -p 80:80 -d httpd
 # drop all image
 docker system prune --all --volumes --force
-
+# to check docker ip address
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-mvc-app-1
+# access mysql terminal 
+docker exec -it 3a9b4807bbaf bash
+#remove cache
+docker-compose build --no-cache
+#check the logs
+docker-compose logs db
+# access mysql through docker terminal
+docker exec -it telegramdesktop-db-1 mariadb --user admin -psaboor123

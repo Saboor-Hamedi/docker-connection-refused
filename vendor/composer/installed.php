@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'saboor/php-mvc',
+        'name' => 'vendor/saboor',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => NULL,
@@ -28,15 +28,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'saboor/php-mvc' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'symfony/polyfill-ctype' => array(
             'pretty_version' => 'v1.27.0',
             'version' => '1.27.0.0',
@@ -61,6 +52,15 @@
             'reference' => '7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'vendor/saboor' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

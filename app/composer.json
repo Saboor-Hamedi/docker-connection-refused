@@ -1,0 +1,17 @@
+{
+    "name": "saboor/php-mvc",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Saboor-Hamedi",
+            "email": "janhamedi49@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

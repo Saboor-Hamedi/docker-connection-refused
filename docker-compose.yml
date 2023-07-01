@@ -1,35 +1,30 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  app:
-    image: php_mvc
-    build: ./docker
+  web:
+    build:
+      context: ./docker
     ports:
-      - "${APP_PORT:-8080}:80"
+      - 80:80
     volumes:
       - ./:/var/www
+    depends_on:
+      - db
     environment:
-      - APP_PORT=${APP_PORT:-8080}
-      - DB_PORT=${DOCKER_MARIADB_PORT}
-      - MYSQL_ROOT_PASSWORD=${DOCKER_MARIADB_ROOT_PASSWORD}
-      - MYSQL_USER=${DOCKER_MARIADB_USER}
-      - MYSQL_PASSWORD=${DOCKER_MARIADB_PASSWORD}
-      - MYSQL_DATABASE=${DOCKER_MARIADB_DATABASE}
-    extra_hosts:
-    - "host.docker.internal:host-gateway"
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+
   db:
     image: mariadb:latest
-    ports:
-      - "${DOCKER_MARIADB_PORT}:3306"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      # - mysql-data:/var/lib/mysql
+      -  db-data:/var/lib/mysql
       - ./docker/mysql-config.cnf:/etc/mysql/conf.d/config.cnf
       - ./volumes/data/mariadb:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DOCKER_MARIADB_ROOT_PASSWORD}
-      - MYSQL_USER=${DOCKER_MARIADB_USER}
-      - MYSQL_PASSWORD=${DOCKER_MARIADB_PASSWORD}
-      - MYSQL_DATABASE=${DOCKER_MARIADB_DATABASE}
-
+      - ./table.sql:/docker-entrypoint-initdb.d/table.sql
 volumes:
-  mysql-data:
+  db-data:
