@@ -1,39 +1,28 @@
 FROM php:8.2-apache
 
-ENV COMPOSER_ALLOW_SUPERUSER =1
 # Copy virtual host into container
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
 
 # Enable rewrite mode
 RUN a2enmod rewrite
 
 # Install necessary packages
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install \
     libzip-dev \
     wget \
     git \
-    unzip 
-
-# Install MySQL client
-RUN apt-get update \
-    && apt-get install -y default-mysql-client \
-    && rm -rf /var/lib/apt/lists/*    
-# install mysql terminal
-RUN apt-get update && apt-get install -y mariadb-client
+    unzip \
+    mariadb-client\
+    -y --no-install-recommends
 # Install PHP Extensions
 RUN docker-php-ext-install zip pdo_mysql
 
-# COPY xdebug-3.1.5.tgz /tmp/xdebug.tgz
-# RUN pecl install /tmp/xdebug.tgz \
-#     && docker-php-ext-enable xdebug
-
+# RUN pecl install -o -f xdebug-3.1.3 \
 #     && rm -rf /tmp/pear
 
 # Copy composer installable
 COPY ./install-composer.sh ./
-
 
 # Copy php.ini
 COPY ./php.ini /usr/local/etc/php/
@@ -46,15 +35,11 @@ RUN apt-get purge -y g++ \
     && sh ./install-composer.sh \
     && rm ./install-composer.sh
 
+# Change the current working directory
+WORKDIR /var/www
 
 # Change the owner of the container document root
 RUN chown -R www-data:www-data /var/www
 
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copy the .env file to the container
-WORKDIR /var/www
 # Start Apache in foreground
 CMD ["apache2-foreground"]

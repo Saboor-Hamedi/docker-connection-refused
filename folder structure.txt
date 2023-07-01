@@ -1,0 +1,23 @@
+PHP-MVC
+    -app
+        -config
+        -controllers
+        -core
+        -html
+        -models
+        -views
+    docker 
+        -db
+        -server
+            -server
+                -apacche
+                -sites-enabled
+                    site.conf
+                php
+                    php.ini
+            Dockerfile   
+    public
+        index.php
+        .htaccess
+    
+    docker-compose.yml
