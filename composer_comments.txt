@@ -22,3 +22,4 @@ docker-compose build --no-cache
 docker-compose logs db
 # access mysql through docker terminal
 docker exec -it telegramdesktop-db-1 mariadb --user admin -psaboor123
+

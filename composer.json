@@ -1,17 +1,9 @@
 {
-    "name": "vendor/saboor",
+    "name": "root/www",
     "autoload": {
         "psr-4": {
-            "Vendor\\Saboor\\": "src/"
+            "App\\": "app/"
         }
     },
-    "authors": [
-        {
-            "name": "Saboor-Hamedi",
-            "email": "janhamedi49@gmail.com"
-        }
-    ],
-    "require": {
-        "vlucas/phpdotenv": "^5.5"
-    }
+    "require": {}
 }
