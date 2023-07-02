@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'vendor/saboor',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '0cdbaa47733f5afa92d98ea36ca5bf1cab00547f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'vendor/saboor' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '0cdbaa47733f5afa92d98ea36ca5bf1cab00547f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -22,3 +22,5 @@ docker-compose build --no-cache
 docker-compose logs db
 # access mysql through docker terminal
 docker exec -it telegramdesktop-db-1 mariadb --user admin -psaboor123
+# install composer 
+docker exec php-mvc-web-1 composer dump-autoload

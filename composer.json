@@ -2,7 +2,7 @@
     "name": "vendor/saboor",
     "autoload": {
         "psr-4": {
-            "Vendor\\Saboor\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
